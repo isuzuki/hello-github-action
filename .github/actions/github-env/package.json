@@ -1,9 +1,11 @@
 {
+  "main": "lib/main.js",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc && ncc build"
   },
   "devDependencies": {
     "@types/node": "^13.7.1",
+    "@zeit/ncc": "^0.21.1",
     "typescript": "^3.7.5"
   },
   "dependencies": {
