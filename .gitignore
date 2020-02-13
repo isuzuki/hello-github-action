@@ -82,7 +82,8 @@ typings/
 
 # Nuxt.js build / generate output
 .nuxt
-dist
+# comment out for github actions
+# dist
 
 # Gatsby files
 .cache/
