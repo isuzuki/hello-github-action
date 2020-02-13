@@ -27,3 +27,6 @@ jobs:
         uses: actions/checkout@v2
       - name: Get env
         uses: ./.github/actions/github-env
+        id: hello
+      - name: Echo github ref
+        run: echo '${{ steps.hello.outputs.ref }}'

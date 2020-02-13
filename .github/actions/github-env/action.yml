@@ -1,5 +1,8 @@
 name: 'GitHub Env'
 description: 'Get github env values on action runs environemnt'
+outputs:
+  ref:
+    description: 'GitHub ref'
 runs:
   using: 'node12'
   main: './dist/index.js'
