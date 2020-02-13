@@ -18,3 +18,12 @@ jobs:
 
       - name: hello
         uses: ./
+
+  action-env:
+    runs-on: ubuntu-latest
+    name: Get env values
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Get env
+        uses: ./.github/actions/github-env

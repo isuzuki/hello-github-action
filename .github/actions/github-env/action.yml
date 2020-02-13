@@ -1,0 +1,5 @@
+name: 'GitHub Env'
+description: 'Get github env values on action runs environemnt'
+runs:
+  using: 'node12'
+  main: './dist/index.js'

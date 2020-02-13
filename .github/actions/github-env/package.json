@@ -2,13 +2,8 @@
   "scripts": {
     "build": "tsc"
   },
-  "dependencies": {
-    "chalk": "^3.0.0"
-  },
   "devDependencies": {
-    "@types/chalk": "^2.2.0",
     "@types/node": "^13.7.1",
-    "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   }
 }
