@@ -1,0 +1,13 @@
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: test golang install
+
+    steps:
+      - name: before which node
+        run: which node
+
+      - name: before which golang
+        run: which go
