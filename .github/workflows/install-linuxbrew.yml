@@ -22,6 +22,8 @@ jobs:
         run: |
           sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
 
+          ls -la /home/linuxbrew/
+
           test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
           test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
           test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
@@ -34,3 +36,6 @@ jobs:
 
           brew update
           brew upgrade
+
+      - name: ls
+        run: ls -l /home/
