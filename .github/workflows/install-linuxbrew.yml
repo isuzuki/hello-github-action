@@ -1,0 +1,36 @@
+on:
+  push:
+
+name: Install Linuxbrew
+
+jobs:
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cache linuxbrew
+        uses: actions/cache@v1
+        env:
+          cache-name: cache-linuxbrew
+        with:
+          path: /home/linuxbrew/.linuxbrew
+          key: ${{ runner.os }}-${{ env.cache-name }}
+          restore-keys: |
+            ${{ runner.os }}-${{ env.cache-name }}
+
+      - name: Install Linuxbrew
+        run: |
+          sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+
+          test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
+          test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+          test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
+          echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+
+          brew --version
+
+          brew tap aws/tap
+          brew install aws-sam-cli
+
+          brew update
+          brew upgrade
