@@ -3,35 +3,51 @@ on:
 
 name: Install Linuxbrew
 
+env:
+  INSTALL_LINUXBREW_PATH: /home/linuxbrew/.linuxbrew
+
 jobs:
   install:
     name: Install
     runs-on: ubuntu-latest
     steps:
-      - name: Cache linuxbrew
+      - name: Mkdir linuxbrew install directory
+        run: sudo mkdir -p $(dirname ${{ env.INSTALL_LINUXBREW_PATH }})
+
+      - name: Cache linuxbrew install directory
         uses: actions/cache@v1
         env:
           cache-name: cache-linuxbrew
         with:
-          path: /home/linuxbrew/.linuxbrew
+          path: ${{ env.INSTALL_LINUXBREW_PATH }}
           key: ${{ runner.os }}-${{ env.cache-name }}
           restore-keys: |
             ${{ runner.os }}-${{ env.cache-name }}
 
-      - name: Install Linuxbrew
+      - name: Install linuxbrew
         run: |
-          git clone https://github.com/Homebrew/brew ~/.linuxbrew/Homebrew
-          mkdir ~/.linuxbrew/bin
-          ln -s ~/.linuxbrew/Homebrew/bin/brew ~/.linuxbrew/bin
-          eval $(~/.linuxbrew/bin/brew shellenv)
+          sh -c "$(curl -fsSL https://raw.githubusercontent.com/Linuxbrew/install/master/install.sh)"
+          eval $(${{ env.INSTALL_LINUXBREW_PATH }}/bin/brew shellenv)
 
           brew --version
 
+      - name: Install aws-sam-cli
+        run: |
+          eval $(${{ env.INSTALL_LINUXBREW_PATH }}/bin/brew shellenv)
           brew tap aws/tap
           brew install aws-sam-cli
 
-          brew update
+      - name: Brew upgrade
+        run: |
+          eval $(${{ env.INSTALL_LINUXBREW_PATH }}/bin/brew shellenv)
           brew upgrade
 
-      - name: ls
-        run: ls -l /home/
+  test:
+    needs: install
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test use brew
+        run: |
+          eval $(${{ env.INSTALL_LINUXBREW_PATH }}/bin/brew shellenv)
+          brew --version
