@@ -42,11 +42,26 @@ jobs:
           eval $(${{ env.INSTALL_LINUXBREW_PATH }}/bin/brew shellenv)
           brew upgrade
 
+      - name: Upload linuxbrew
+        uses: actions/upload-artifact@v1
+        with:
+          name: linuxbrew
+          path: ${{ env.INSTALL_LINUXBREW_PATH }}
+
   test:
     needs: install
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Download linuxbrew
+        uses: actions/download-artifact@v1
+        with:
+          name: linuxbrew
+      - name:
+        run: |
+          ls -la
+          ls -la linuxbrew
+
       - name: Test use brew
         run: |
           eval $(${{ env.INSTALL_LINUXBREW_PATH }}/bin/brew shellenv)
